@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Picture;
+use App\Gallery;
 use Illuminate\Http\Request;
 
 class PictureController extends Controller
@@ -14,7 +15,7 @@ class PictureController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -22,9 +23,9 @@ class PictureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Gallery $gallery)
     {
-        return view('pictures.create');
+        return view('pictures.create', compact('gallery'));
     }
 
     /**
@@ -37,7 +38,6 @@ class PictureController extends Controller
     {
         $picture = new Picture($request->all());
         $picture->gallery_id = $request->gallery;
-
         $require->path = $request->path->store('pictures', 'local');
         
         $picture->save();
