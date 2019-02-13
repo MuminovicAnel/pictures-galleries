@@ -36,7 +36,8 @@ class PictureController extends Controller
     public function store(Request $request)
     {
         $picture = new Picture($request->all());
-        
+        $picture->gallery_id = $request->gallery;
+        $picture->save();
     }
 
     /**

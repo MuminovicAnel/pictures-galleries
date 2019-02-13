@@ -15,7 +15,7 @@
                                 <label for="title" class="col-md-4 col-form-label text-md-right">Title</label>
 
                                 <div class="col-md-6">
-                                    <input id="title" type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" title="title" value="{{ old('title') }}" required autofocus>
+                                    <input id="title" type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"name="title" value="{{ old('title') }}" required autofocus>
 
                                     @if ($errors->has('title'))
                                         <span class="invalid-feedback" role="alert">
@@ -38,7 +38,7 @@
                         <label for="path" class="col-md-4 col-form-label text-md-right">Image</label>
 
                         <div class="col-md-6">
-                            <input id="path" type="file" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" title="image" value="{{ old('title') }}">
+                            <input id="path" type="file" class="form-control{{ $errors->has('path') ? ' is-invalid' : '' }}" name="path" value="{{ old('path') }}">
 
                             @if ($errors->has('path'))
                                 <span class="invalid-feedback" role="alert">
