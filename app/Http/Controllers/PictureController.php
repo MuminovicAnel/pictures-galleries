@@ -39,7 +39,7 @@ class PictureController extends Controller
     {
         $picture = new Picture($request->all());
         $picture->gallery_id = $request->gallery;
-        $request->path = $request->path->store('pictures', 'local');
+        $picture->path = $request->path->store('pictures', 'local');
         
         $picture->save();
 
