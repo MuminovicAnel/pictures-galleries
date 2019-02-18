@@ -8,7 +8,7 @@
                     <div class="card-header">New Picture for gallery:{{$gallery->name}}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('galleries.pictures.store'), $gallery }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('galleries.pictures.store', $gallery) }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -24,21 +24,11 @@
                                     @endif
                                 </div>
                             </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Create
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                     <div class="form-group row">
                         <label for="path" class="col-md-4 col-form-label text-md-right">Image</label>
 
                         <div class="col-md-6">
-                            <input id="path" type="file" class="form-control{{ $errors->has('path') ? ' is-invalid' : '' }}" name="path" value="{{ old('path') }}">
+                            <input id="path" type="file" class="form-control-file{{ $errors->has('path') ? ' is-invalid' : '' }}" name="path" value="{{ old('path') }}">
 
                             @if ($errors->has('path'))
                                 <span class="invalid-feedback" role="alert">
@@ -55,6 +45,8 @@
                             </button>
                         </div>
                     </div>
+                </form>
+                </div>
                 </div>
             </div>
         </div>

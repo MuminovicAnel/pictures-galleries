@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Picture;
 use App\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PictureController extends Controller
 {
@@ -38,7 +39,7 @@ class PictureController extends Controller
     {
         $picture = new Picture($request->all());
         $picture->gallery_id = $request->gallery;
-        $require->path = $request->path->store('pictures', 'local');
+        $request->path = $request->path->store('pictures', 'local');
         
         $picture->save();
 
@@ -51,9 +52,13 @@ class PictureController extends Controller
      * @param  \App\Picture  $picture
      * @return \Illuminate\Http\Response
      */
-    public function show(Picture $picture)
+    public function show(Gallery $gallery, Picture $picture, Request $request)
     {
-        //
+        if (Str::startsWith($request->header('Accept'), 'image')) {
+            return response()->file(\Storage::disk('local')->getAdapter()->getPathPrefix() . $picture->path);
+        } else {
+            return view('pictures.show', compact('gallery', 'picture'));
+        }
     }
 
     /**

@@ -19,4 +19,8 @@ class Gallery extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function pictures(){
+        return $this->hasMany('App\Picture');
+    }
+
 }
