@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Picture;
+use App\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PictureController extends Controller
 {
@@ -12,9 +14,9 @@ class PictureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Gallery $gallery)
     {
-        //
+        return redirect()->route('galleries.show', request()->route('gallery'));
     }
 
     /**
@@ -22,9 +24,9 @@ class PictureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Gallery $gallery)
     {
-        //
+        return view('pictures.create', compact('gallery'));
     }
 
     /**
@@ -35,7 +37,13 @@ class PictureController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $picture = new Picture($request->all());
+        $picture->gallery_id = $request->gallery;
+        $picture->path = $request->path->store('pictures', 'local');
+        
+        $picture->save();
+
+        return redirect()->route('galleries.show', request()->route('gallery'));
     }
 
     /**
@@ -44,9 +52,13 @@ class PictureController extends Controller
      * @param  \App\Picture  $picture
      * @return \Illuminate\Http\Response
      */
-    public function show(Picture $picture)
+    public function show(Gallery $gallery, Picture $picture, Request $request)
     {
-        //
+        if (Str::startsWith($request->header('Accept'), 'image')) {
+            return response()->file(\Storage::disk('local')->getAdapter()->getPathPrefix() . $picture->path);
+        } else {
+            return view('pictures.show', compact('gallery', 'picture'));
+        }
     }
 
     /**
