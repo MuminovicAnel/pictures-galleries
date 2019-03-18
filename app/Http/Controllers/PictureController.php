@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Picture;
+use App\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Kfirba\Directo\Directo;
+
 
 class PictureController extends Controller
 {
@@ -12,9 +16,10 @@ class PictureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Gallery $gallery)
     {
-        //
+
+        return redirect()->route('galleries.show', request()->route('gallery'));
     }
 
     /**
@@ -22,9 +27,9 @@ class PictureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Gallery $gallery)
     {
-        //
+        return view('pictures.create', compact('gallery'));
     }
 
     /**
@@ -33,9 +38,15 @@ class PictureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Directo $directo)
     {
-        //
+        dd($request->all());
+        $picture = new Picture($request->all());
+        $picture->gallery_id = $request->gallery;
+        
+        $picture->save();
+
+        return redirect()->route('galleries.show', request()->route('gallery'));
     }
 
     /**
@@ -44,9 +55,13 @@ class PictureController extends Controller
      * @param  \App\Picture  $picture
      * @return \Illuminate\Http\Response
      */
-    public function show(Picture $picture)
+    public function show(Gallery $gallery, Picture $picture, Request $request)
     {
-        //
+        if (Str::startsWith($request->header('Accept'), 'image')) {
+            return redirect(\Storage::disk('s3')->temporaryUrl($picture->path,  now()->addMinutes(1)));
+        } else {
+            return view('pictures.show', compact('gallery', 'picture'));
+        }
     }
 
     /**
