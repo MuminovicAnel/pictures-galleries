@@ -6,6 +6,8 @@ use App\Picture;
 use App\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Kfirba\Directo\Directo;
+
 
 class PictureController extends Controller
 {
@@ -16,6 +18,7 @@ class PictureController extends Controller
      */
     public function index(Gallery $gallery)
     {
+
         return redirect()->route('galleries.show', request()->route('gallery'));
     }
 
@@ -35,11 +38,11 @@ class PictureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Directo $directo)
     {
+        dd($request->all());
         $picture = new Picture($request->all());
         $picture->gallery_id = $request->gallery;
-        $picture->path = $request->path->store('pictures', 's3');
         
         $picture->save();
 
