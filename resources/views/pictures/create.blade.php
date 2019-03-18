@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="{{ asset('js/uploadAWS3.js') }}" defer></script>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -8,9 +9,10 @@
                     <div class="card-header">New Picture for gallery:{{$gallery->name}}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('galleries.pictures.store', $gallery) }}" enctype="multipart/form-data">
+                        <form action="" enctype="multipart/form-data" >
                             @csrf
-
+                            {!! Directo::inputsAsHtml() !!}
+                            <input type="hidden" name="url" value="{!! Directo::formUrl() !!}">
                             <div class="form-group row">
                                 <label for="title" class="col-md-4 col-form-label text-md-right">Title</label>
 
@@ -28,7 +30,7 @@
                         <label for="path" class="col-md-4 col-form-label text-md-right">Image</label>
 
                         <div class="col-md-6">
-                            <input id="path" type="file" class="form-control-file{{ $errors->has('path') ? ' is-invalid' : '' }}" name="path" value="{{ old('path') }}">
+                            <input id="path" type="file" class="form-control-file{{ $errors->has('path') ? ' is-invalid' : '' }}" name="file" value="{{ old('path') }}">
 
                             @if ($errors->has('path'))
                                 <span class="invalid-feedback" role="alert">
@@ -40,7 +42,7 @@
 
                     <div class="form-group row mb-0">
                         <div class="col-md-8 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" name="submit">
                                 Create
                             </button>
                         </div>
