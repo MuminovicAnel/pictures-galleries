@@ -7,6 +7,7 @@
         @foreach($galleries as $gallery)
             <li>
                 <a href="{{ route('galleries.show', $gallery->id) }}"> {{ $gallery->name }} </a>
+                <img src="{{ route('galleries.pictures.show', compact('gallery', 'picture')) }}"/>
             </li>
         @endforeach
     </ul>
