@@ -28,7 +28,7 @@ $(document).ready(function() {
         success: function() {
           var fullPath = window.location.pathname
           var split = fullPath.split("/");
-          var path = split.slice(0, split.length - 1).join("/") + "/";
+          var path = split.slice(0, split.length - 1).join("/") + "/" + "create";
           $.ajax({
             headers: { 'X-CSRF-TOKEN': $('input[name="_token"]').val() },
             type: "POST",
