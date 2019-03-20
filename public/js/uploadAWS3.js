@@ -5,7 +5,7 @@ $(document).ready(function() {
     var url = $('input[name="url"]').val();
     var form = new FormData();
 
-    var key = "am/pictures/" + (new Date).getTime() + '-' + file.name;
+    var key = "am" + "/" + "pictures" + "/" + (new Date).getTime() + '-' + file.name;
 
     form.append('key', key);
     form.append('success_action_redirect', $('input[name="success_action_redirect"]').val());
