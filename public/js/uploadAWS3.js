@@ -34,6 +34,9 @@ $(document).ready(function() {
             type: "POST",
             url: path,
             data: { path: key, title: $('#title').val() },
+            success: function() {
+              window.location.href = path;
+            }
           });
         },
         error : function(jqXHR, textStatus, errorThrown) {
