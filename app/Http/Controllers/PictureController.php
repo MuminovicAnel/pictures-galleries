@@ -40,7 +40,6 @@ class PictureController extends Controller
      */
     public function store(Request $request, Directo $directo)
     {
-        dd($request->all());
         $picture = new Picture($request->all());
         $picture->gallery_id = $request->gallery;
         
